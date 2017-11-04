@@ -43,15 +43,6 @@ public class ProcesadorYodafy extends Thread {
         public void run(){
 		
                 String cadenaRecibida;
-            
-                /* Antigua implementación
-		// Como máximo leeremos un bloque de 1024 bytes. Esto se puede modificar.
-		byte [] datosRecibidos=new byte[1024];
-		int bytesRecibidos=0;
-		
-		// Array de bytes para enviar la respuesta. Podemos reservar memoria cuando vayamos a enviarla:
-		byte [] datosEnviar;
-		*/
 		
 		try {
                     
@@ -70,7 +61,7 @@ public class ProcesadorYodafy extends Thread {
 			// Yoda reinterpreta el mensaje:
 			String respuesta=yodaDo(cadenaRecibida);
 			
-			
+			System.out.println("Trabajando en la hebra número " + n_ejecucion);
 			// Enviamos la traducción de Yoda:
 			////////////////////////////////////////////////////////
 			outPrinter.println(respuesta);

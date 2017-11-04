@@ -38,8 +38,11 @@ public class YodafyServidorIterativo {
 				/////////////////////////////////////////////////
                                 Socket socketConexion = null;
 				try {
+                                    
                                     socketConexion = socketServidor.accept();
+                                    ProcesadorYodafy hebra = new ProcesadorYodafy(socketConexion,n_ejecuciones);
                                     System.out.println("Se ha recibido una petición");
+                                    hebra.run();
                                 
                                 } catch (IOException e){
                                    System.err.println("No se pudo aceptar la conexión\n"); 
