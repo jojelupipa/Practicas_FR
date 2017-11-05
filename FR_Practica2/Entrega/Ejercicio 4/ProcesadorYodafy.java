@@ -63,7 +63,7 @@ public class ProcesadorYodafy {
                         socketServicio.receive(paquete);
                         InetAddress direccion = paquete.getAddress();
                         puerto = paquete.getPort();
-                        buffer = paquete.getData();
+                        buffer = paquete.getData(); // Escribimos en el buffer de entrada
 			
                         
 			// Yoda hace su magia:
