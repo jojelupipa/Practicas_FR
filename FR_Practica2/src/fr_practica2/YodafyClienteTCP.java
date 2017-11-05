@@ -10,8 +10,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class YodafyClienteTCP {
 
@@ -22,63 +27,53 @@ public class YodafyClienteTCP {
 		String host="localhost";
 		// Puerto en el que espera el servidor:
 		int port=8989;
+                InetAddress direccion = null;
+                DatagramPacket paquete;
+                byte[] buffer = new byte[256];
 		
-		// Socket para la conexión TCP
-		Socket socketServicio=null;
+		// Socket para la conexión UDP
+		DatagramSocket socketServicio;
                 
 		
 		try {
 			// Creamos un socket que se conecte a "host" y "port":
 			//////////////////////////////////////////////////////
-			socketServicio = new Socket(host,port);
+			socketServicio = new DatagramSocket();
 			//////////////////////////////////////////////////////			
                         
-                        // Implementación de los PrintWriter BufferedReader
-                        PrintWriter outPrinter = new PrintWriter(socketServicio.getOutputStream(), true);
-                        BufferedReader inReader = new BufferedReader(new InputStreamReader(socketServicio.getInputStream()));   
-			
-			// Si queremos enviar una cadena de caracteres por un OutputStream, hay que pasarla primero
-			// a un array de bytes:
+                        //Envíamos nuestro Datagrama
 			String cadenaEnvio = new String("Al monte del volcan debes ir sin demora");
 			
-			// Enviamos el array por el outputStream;
-			//////////////////////////////////////////////////////
-			outPrinter.println(cadenaEnvio);
-			//////////////////////////////////////////////////////
-			
-			// Aunque le indiquemos a TCP que queremos enviar varios arrays de bytes, sólo
-			// los enviará efectivamente cuando considere que tiene suficientes datos que enviar...
-			// Podemos usar "flush()" para obligar a TCP a que no espere para hacer el envío:
-			//////////////////////////////////////////////////////
-			outPrinter.flush();
-			//////////////////////////////////////////////////////
-			
-			// Recibimos la cadena en nuestro string
-                        //////////////////////////////////////////////////////
-                        String cadenaRecibida = inReader.readLine();
-			
-			//////////////////////////////////////////////////////
-                        
-                        try{
-                            inReader.close();
-                            outPrinter.close();
-                        } catch (IOException e){
-                            System.err.println("No se pudo cerrar la conexión");
+                        buffer = cadenaEnvio.getBytes();
+
+                        try {
+                            direccion = InetAddress.getByName(host);
+                        } catch (UnknownHostException ex) {             // Excepción en caso de lectura errónea de host< nbe
+                            Logger.getLogger(YodafyClienteTCP.class.getName()).log(Level.SEVERE, null, ex);
                         }
 			
-			// Mostremos la cadena de caracteres recibidos:
-			System.out.println("Recibido: " + cadenaRecibida);
-			
-			
-			// Una vez terminado el servicio, cerramos el socket (automáticamente se cierran
-			// el inpuStream  y el outputStream)
+                        paquete = new DatagramPacket(buffer, buffer.length);
+                        try {
+                            socketServicio.receive(paquete);
+                        } catch (IOException ex) {
+                            Logger.getLogger(YodafyClienteTCP.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+        
+                        byte [] cadenaLeida = paquete.getData();
+
+                        
+                        
 			//////////////////////////////////////////////////////
-			socketServicio.close();
-			//////////////////////////////////////////////////////
+                        System.out.println("Recibido: ");
+                        for (int i = 0; i < cadenaLeida.length; i++) {
+                            System.out.print((char) cadenaLeida[i]);
+                        }
+
+                        // Cerramos el socket al finalizar
+                        socketServicio.close(); 
+			
 			
 			// Excepciones:
-		} catch (UnknownHostException e) {
-			System.err.println("Error: Nombre de host no encontrado.");
 		} catch (IOException e) {
 			System.err.println("Error de entrada/salida al abrir el socket.");
 		}
