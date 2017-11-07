@@ -59,9 +59,12 @@ public class ProcesadorYodafy extends Thread {
 			// Yoda hace su magia:
 			
 			// Yoda reinterpreta el mensaje:
-			String respuesta=yodaDo(cadenaRecibida);
-			
-			System.out.println("Trabajando en la hebra número " + n_ejecucion);
+                        String respuesta = "";
+                        try{
+                            respuesta = yodaDo(cadenaRecibida);
+                        } catch (NullPointerException a){
+                        
+                        }
 			// Enviamos la traducción de Yoda:
 			////////////////////////////////////////////////////////
 			outPrinter.println(respuesta);
