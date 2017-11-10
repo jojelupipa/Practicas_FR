@@ -136,15 +136,74 @@ saltos donde las demoras no son perceptibles o incluso estableciendo
 túneles de tamaño fijo que completarían con relleno si no se alcanzase
 dicho tamaño.
 
+# Otra alternativa. Freenet
 
+Freenet es una red completamente distribuida y anónima de publicación
+par a par. Esta ofrece una forma segura de almacenar datos y está
+enfocada a solucionar problemas de carga y desbordamientos. Pero
+mientras que Freenet está diseñada como un almacén distribuido de
+datos, sus usuarios han construido aplicaciones sobre el sistema para
+tener comunicaciones anónimas genéricas.
 
+Este diseño de almacén hace que se pueda usar para acceder al
+contenido publicado por otros incluso sin que estos otros estén
+online. Esta funcionalidad I2P nunca la tendrá. Por esto a día de hoy
+no se puede usar I2P como sistema de almacenamiento distrubuido.
 
+Freenet presenta algunos problemas de implementación, escalabilidad e
+incluso hay problemas con el anonimato de algunos algoritmos dada la
+heurística de ruteo de Freenet. Sin embargo sus propiedades desalentan
+a cualquier atacante que no tenga recursos suficientes para realizar
+análisis completos.
 
+# Invisible Internet Project. I2P
 
+Ahora que tenemos un ligero conocimiento sobre cómo funcionan algunas
+de las otras redes anónimas más usadas, vamos a realizar un análisis
+algo más profundo de I2P.
 
+En pocas palabras, I2P es un proyecto para construir, desplegar y
+mantener una red que soporte comunicación segura y anónima. Es
+administrable en cuanto a anonimato, fiabilidad, uso de banda ancha y
+latencia. Ninguno de estos puntos es presionable para comprometer la
+seguridad del sistema. De hecho es configurable dinámicamente en
+función de los ataques que pueda recibir.
 
+La mayoría de las redes anónimas pretenden ocultar al autor original
+de una comunicación, pero no al destinatario. I2P, por el contrario,
+está diseñado para permitir la comunicación anónima entre dos pares
+que no son identificables entre ellos y entre terceras partes. Ahora
+mismo hay tanto sitios web internos que permiten publicación y
+hospedaje anónimo como proxies HTTP hacia la web normal que permiten
+la navegación anónima.
+
+La red está orientada a mensajes, y es, en esencia, una capa IP segura
+y anónima donde los mensajes son direccionados hacia claves
+criptográficas y estos pueden ser más largos que los paquetes IP.
+
+El diseño de I2P busca hacer más costosa la identificación de un
+individuo en un ambiente hostil, cubriendo su tráfico con el de otras
+personas que no requieran tal anonimato.
+
+## ¿Cómo lo hace?
+
+La red se compone de una instalación de nodos, llamados routers, con un
+número de rutas virtuales unidireccionales entrantes y salientes,
+llamados túneles. Cada router tiene una identidad cifrada que suele
+ser permanente. Estos routers se comunican entre ellos con UDP o
+TCP. La diferencia radica en que un cliente puede conectarse
+a cualquier router y autorizar la creación temporal de túneles para
+la comunicación a través de la red.
+
+I2P tiene su propia base de datos de red para distribuir la
+información de rutas y contactos, igual que hacía Kademlia. De
+hecho implementa una modificación de su algoritmo.
+
+<!--Imagen Comunicación Alice,Bob,Charlie,Dave-->
+![Ejemplo Comunicación](img/EjemploComunicacion.png)
 
 # Fuentes
 
 * [¿Qué es TOR?](https://www.torproject.org/about/overview.html.en)
 * [Comparación TOR-I2P](https://geti2p.net/es/comparison/tor)
+* [Comparación Freenet-I2P](https://geti2p.net/es/comparison/freenet)
