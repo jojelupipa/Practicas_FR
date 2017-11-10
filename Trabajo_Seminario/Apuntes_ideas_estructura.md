@@ -202,6 +202,24 @@ hecho implementa una modificación de su algoritmo.
 <!--Imagen Comunicación Alice,Bob,Charlie,Dave-->
 ![Ejemplo Comunicación](img/EjemploComunicacion.png)
 
+En esta foto observamos el esquema de una posible comunicación en
+I2P. Si Alice quiere hablar con Bob, envía un mensaje por su tunel de
+salida a algún tunel de entrada de Bob, sabe cómo enviarlos
+consultando la base de datos de la red, que es continuamente
+actualizada.
+
+Bob, para responderle simplemente tiene que repetir el mismo
+proceso. Envía un mensaje al tunel de entrada de Alice. Para hacer las
+cosas más sencillas, se usa la envoltura garlic, una encriptación por
+capas, incluyendo la información necesaria para que Alice pueda
+responder sin tener que consultar la base de datos.
+
+Respecto a las medidas de seguridad de I2P, como mencionábamos antes,
+es completamente distribuida, sin servidores que tengan estadísticas
+de uso ni control centralizado. Además, hace uso de un gram número de
+técnicas criptográficas, algoritmos de encriptación tales como cifrado
+Gamal de 2048 bits, AES de 256 bits, hashes SHA256...
+
 # Fuentes
 
 * [¿Qué es TOR?](https://www.torproject.org/about/overview.html.en)
