@@ -220,6 +220,163 @@ de uso ni control centralizado. Además, hace uso de un gram número de
 técnicas criptográficas, algoritmos de encriptación tales como cifrado
 Gamal de 2048 bits, AES de 256 bits, hashes SHA256...
 
+
+## Envoltura garlic
+
+A diferencia de la red Tor, que emplea el enrutado Onion, I2P utiliza
+la envoltura garlic. 
+
+Ambas son bastante similares, por ejemplo, en cuanto a su cifrado por
+capas. Sin embargo, en el caso de la envoltura garlic, se extiende el
+concepto del enrutado onion, puesto que podemos agrupar varios
+mensajes juntos (dientes de ajo). Dichos mensajes se exponen en el
+último ruter del túnel correspondiente. 
+
+Otra diferencia que podría relacionarse con el cambio de nombre sería
+el camino unidireccional del "garlic routing", lo cual simplifica el
+algoritmo. 
+
+## Base de datos
+
+La base de datos o netDb de I2P contiene 2 tipos de datos: la
+información de contacto del ruter (RouterInfo) y la destinación
+(LeaseSet). 
+
+La netDb usa una técnica conocida como "FloodFill", que consiste en
+una serie de ruters que mantienen la base de datos distribuida.
+
+Además, los datos están verificados correctamente y su información va
+cambiando, reemplazando entradas antiguas y protegiéndose frente a
+ciertos ataques.
+
+
+## Terminología de los túneles
+
+<!--Conceptos de los túneles-->
+![Túneles](img/tunel.png)
+
+En este ejemplo, Alice envía un mensaje a Bob. De este modo y tal como
+hemos visto anteriormente, se construyen túneles virtuales. En el
+ejemplo de comunicación previo, hemos distinguido entre túneles de
+salida (los empleados por Alice) y túneles de entrada (los usados por
+Bob). Sin embargo, podemos diferenciar otras tres categorías a la hora
+de clasificar los túneles.
+
+- Túnel puerta de salida o gateway: el primer ruter en un túnel. En
+  este caso, serían la A y D de nuestra imagen.
+  
+- Túnel punto final o endpoint: el último ruter del túnel (C y F en el
+  ejemplo).
+  
+- Túnel participante: los ruters que no son gateways o endpoints. Es
+  decir, las letras B y E de arriba.
+  
+
+También podemos considerar los túneles en función del número de saltos
+entre los ruters. Así, en un túnel de 0 saltos, coincidirían el
+gateway y el endpoint, mientras que en uno de 2 saltos habría un túnel
+participante entre ambos.
+
+
+## Selección de pares
+
+Este proceso consiste en elegir a través de qué routers queremos
+enviar nuestros mensajes. Para ello, se analizan los perfiles de los
+pares, que recogen datos que nos indican su velocidad, sobrecarga,
+capacidad de aceptar nuestras peticiones...
+
+La selección se realiza constantemente, dada la gran cantidad de
+túneles clientes que puede mantener el router. Además, la vida de un
+túnel tan solo dura unos diez minutos. De este modo, el profiling o
+creación de los perfiles de los pares resulta de gran utilidad.
+
+
+## Pila de protocolos de I2P
+
+Para explicar la funcionalidad de I2P, podemos distinguir las capas en
+las que puede dividirse.
+
+
+- Capa de Internet: emplea el protocolo IP, de Internet, que hace uso
+  de la entrega de mejor-esfuerzo (best-effort) para aceptar y enviar
+  paquetes.
+  
+
+- Capa de transporte: garantiza la llegada de los paquetes en
+  secuencia y sin errores. Utiliza los protocolos TCP (fiable y
+  ordenado) y UDP (no fiable y desordenado).
+  
+
+- Capa de transporte I2P: suministra conexiones cifradas entre 2
+  routers I2P. No obstante, aún no son anónimos.
+  
+Para ello se implementan los protocolos NTCP, construido encima de
+TCP, y SSU (UDP Seguro Semi-fiable), que usa UDP.
+
+
+- Capa de túnel I2P: suministra conexiones entre túneles con cifrado
+  completo. Transmite mensajes de túnel, que contienen mensajes
+  cifrados I2NP (envían mensajes a múltiples routers).
+  
+- Capa Garlic de I2P: permite la entrega de mensajes I2P cifrada y
+  anónima de extremo a extremo. Los mensajes I2NP se envuelven unos en
+  otros, asegurando el cifrado entre los túneles y transmitiéndose del
+  origen al destino anónimamente para ambos.
+  
+A continuación, podemos hablar de otras capas importantes que
+constituyen I2P aunque no forman parte de su funcionalidad central. 
+
+- Capa de cliente I2P: permite el uso de las funcionalidades de I2P
+  sin tener que acceder a la API del router. Utiliza el protocolo
+  I2CP. 
+
+- Capa de transporte extremo a extremo: posibilita funcionalidades del
+  tipo TCP y UDP encima de I2P. Contiene una librería de Streaming
+  (streams TCP) y una librería de datagramas (UDP). 
+
+- Capa de interfaz para aplicaciones I2P: librerías que facilitan
+  implementaciones sobre I2P (I2PTunnel o BOB). 
+
+- Capa proxy para las aplicaciones I2P: constituida por sistemas
+  proxy, tales como el servidor/cliente HTTP. 
+
+- Capa de aplicación de I2P: está conformada por una gran cantidad de
+  aplicaciones sobre I2P (correo, navegadores, aplicaciones de
+  streaming/datagramas...). 
+
+En el siguiente esquema podemos ver reflejada la división en capas que
+acabamos de describir. 
+
+<!--Imagen Capas I2P-->
+![Capas I2P](img/capas.png)
+
+\newpage
+# Conclusiones
+
+Como hemos podido comprobar, existen alternativas que podemos emplear
+para proteger nuestra privacidad en el ámbito de la red. 
+
+La seguridad y privacidad en la red no es ninguna banalidad. Si no nos
+preocupamos nosotros cuanto antes, serán otros los que se beneficiarán
+a nuestra costa. Pequeños cambios pueden llegar a suponer grandes
+beneficios.
+
+A pesar de que las redes anónimas también tienen sus propias
+vulnerabilidades y puntos que deben ser desarrollados para un mejor
+funcionamiento, pues bien es sabido que alguien con suficientes
+medios, como la NSA, puede identificar al usuario medio como
+cualquiera de nosotros, pero contra muchas otros riesgos a los que
+estamos expuestos, nos ofrecen un camino más seguro con el que sentirnos
+menos comprometidos. 
+
+I2P es una red muy versátil que nos permite acceder a una gran
+cantidad de aplicaciones tales como blogs, foros, correo electrónico,
+chat en tiempo real, navegación web, clientes de mensajería
+instantánea... 
+
+Además, el balance es muy positivo cuando consideramos que se trata de
+un proyecto de código abierto en el que cualquiera puede contribuir. 
+
 # Fuentes
 
 * [¿Qué es TOR?](https://www.torproject.org/about/overview.html.en)
