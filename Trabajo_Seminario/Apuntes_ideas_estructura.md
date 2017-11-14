@@ -422,29 +422,34 @@ usuario**.
 
 `i2prouter start`
 
-Ahora tenemos que configurar la NAT/firewall, el port forwarding,
-accediendo desde el navegador a http://127.0.0.1:7657/confignet.
+Ahora podemos configurar la NAT/firewall, el port forwarding,
+accediendo desde el navegador a http://127.0.0.1:7657/confignet. Para
+esta demostración no vamos a modificar esto.
 
 Los ajustes del ancho de banda se pueden configurar en esa misma
-página.
+página. Esto sí que es recomendable configurarlo si se desea una
+velocidad potencial mayor.
 
-Por último, para acceder a sitios "eepsites" por el navegador hay que
-configurar los proxies.
+Para acceder a los sitios .i2p en nuestro navegador debemos configurar
+el proxy. En nuestro caso, Firefox, la configuración es la siguiente. En
+Menú-Preferencias-General-Proxy de Red-Configuración debemos
+configurar lo siguiente:
 
+![Configuración](img/Configuración Proxy Firefox.jpg)
 
 Para probar que todo esté bien, se puede intentar conectar a la [wiki
 de i2p](i2pwiki.i2p)
 
 # Fuentes
 
-* [¿Qué es TOR?](https://www.torproject.org/about/overview.html.en)
-* [Comparación TOR-I2P](https://geti2p.net/es/comparison/tor)
-* [Comparación Freenet-I2P](https://geti2p.net/es/comparison/freenet)
+Las fuentes de esta exposición son las siguientes:
+
+* [**¿Qué es TOR?** https://www.torproject.org/about/overview.html.en](https://www.torproject.org/about/overview.html.en)
+* [**Comparación TOR-I2P**: https://geti2p.net/es/comparison/tor](https://geti2p.net/es/comparison/tor)
+* [**Comparación Freenet-I2P**: https://geti2p.net/es/comparison/freenet ](https://geti2p.net/es/comparison/freenet)
 *
-  [Introducción y tutorial a I2P](https://thetinhat.com/tutorials/darknets/i2p.html)
+  [**Introducción y tutorial a I2P**: https://thetinhat.com/tutorials/darknets/i2p.html](https://thetinhat.com/tutorials/darknets/i2p.html)
   
-* [Guía Port-Forward](portforward.com)
+* [**Guía Port-Forward (no modificado en la demo)**: portforward.com](portforward.com)
 
-* [Configurar Proxies](https://geti2p.net/en/about/browser-config)
-
-
+* [**Configurar Proxies**: https://geti2p.net/en/about/browser-config](https://geti2p.net/en/about/browser-config)
