@@ -1,0 +1,12 @@
+003 d "Campos de Castilla" "Antonio Machado" prestado
+004 s "Poeta en Nueva York" "García Lorca" disponible
+005 s "Luces de bohemia" "Valle-Inclán" disponible
+006 s "La tía Tula" "Unamuno" disponible
+007 s "El árbol de la ciencia" "Pío Baroja" disponible
+008 s "San Manuel Bueno, mártir" "Unamuno" disponible
+009 d "La vida" "Pío Baroja" prestado
+011 s "La sombra del viento" "Ruiz Zafón" disponible
+
+001 d "Don Quijote de La Mancha" "Cervantes" prestado
+010 d "Hojas de hierba" "Whitman" prestado
+002 s "Hamlet" "Shakespeare" disponible
