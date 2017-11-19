@@ -22,93 +22,91 @@ import java.net.InetAddress;
 // ¡Podríamos realizar un procesado concurrente! 
 //
 public class ProcesadorYodafy {
-	// Referencia a un socket para enviar/recibir las peticiones/respuestas
-	private DatagramSocket socketServicio;
-	// stream de lectura (por aquí se recibe lo que envía el cliente)
-	private InputStream inputStream;
-	// stream de escritura (por aquí se envía los datos al cliente)
-	private OutputStream outputStream;
+    // Referencia a un socket para enviar/recibir las peticiones/respuestas
+    private DatagramSocket socketServicio;
+    // stream de lectura (por aquí se recibe lo que envía el cliente)
+    private InputStream inputStream;
+    // stream de escritura (por aquí se envía los datos al cliente)
+    private OutputStream outputStream;
 	
-	// Para que la respuesta sea siempre diferente, usamos un generador de números aleatorios.
-	private Random random;
+    // Para que la respuesta sea siempre diferente, usamos un generador de números aleatorios.
+    private Random random;
 	
-	// Constructor que tiene como parámetro una referencia al socket abierto en por otra clase
-	public ProcesadorYodafy(DatagramSocket socketServicio) {
-		this.socketServicio=socketServicio;
-		random=new Random();
-	}
+    // Constructor que tiene como parámetro una referencia al socket abierto en por otra clase
+    public ProcesadorYodafy(DatagramSocket socketServicio) {
+	this.socketServicio=socketServicio;
+	random=new Random();
+    }	
 	
-	
-	// Aquí es donde se realiza el procesamiento realmente:
-	void procesa(){
+    // Aquí es donde se realiza el procesamiento realmente:
+    void procesa(){
 		
-                String cadenaRecibida;
+        String cadenaRecibida;
             
-                byte [] buffer=new byte[1024];
-                int puerto;
-                /* Antigua implementación
-		// Como máximo leeremos un bloque de 1024 bytes. Esto se puede modificar.
-		byte [] datosRecibidos=new byte[1024];
-		int bytesRecibidos=0;
+        byte [] buffer=new byte[1024];
+        int puerto;
+        /* Antigua implementación
+        // Como máximo leeremos un bloque de 1024 bytes. Esto se puede modificar.
+        byte [] datosRecibidos=new byte[1024];
+        int bytesRecibidos=0;
 		
-		// Array de bytes para enviar la respuesta. Podemos reservar memoria cuando vayamos a enviarla:
-                */
-                byte [] datosEnviar;
+        // Array de bytes para enviar la respuesta. Podemos reservar memoria cuando vayamos a enviarla:
+        */
+        byte [] datosEnviar;
 		
 		
-		try {
+        try {
                     
-                        // Implementación de los PrintWriter BufferedReader
-                        DatagramPacket paquete = new DatagramPacket(buffer, buffer.length);
-                        socketServicio.receive(paquete);
-                        InetAddress direccion = paquete.getAddress();
-                        puerto = paquete.getPort();
-                        buffer = paquete.getData(); // Escribimos en el buffer de entrada
+            // Implementación de los PrintWriter BufferedReader
+            DatagramPacket paquete = new DatagramPacket(buffer, buffer.length);
+            socketServicio.receive(paquete);
+            InetAddress direccion = paquete.getAddress();
+            puerto = paquete.getPort();
+            buffer = paquete.getData(); // Escribimos en el buffer de entrada
 			
                         
-			// Yoda hace su magia:
-			cadenaRecibida=new String(buffer,0,buffer.length);
+            // Yoda hace su magia:
+            cadenaRecibida=new String(buffer,0,buffer.length);
                         
-			// Yoda reinterpreta el mensaje:
-			String respuesta=yodaDo(cadenaRecibida);
-                        datosEnviar = respuesta.getBytes();
+            // Yoda reinterpreta el mensaje:
+            String respuesta=yodaDo(cadenaRecibida);
+            datosEnviar = respuesta.getBytes();
 			
 			
-			// Enviamos la traducción de Yoda:
-			////////////////////////////////////////////////////////
-			paquete = new DatagramPacket(datosEnviar, datosEnviar.length, direccion, puerto);
-                        socketServicio.send(paquete);
+            // Enviamos la traducción de Yoda:
+            ////////////////////////////////////////////////////////
+            paquete = new DatagramPacket(datosEnviar, datosEnviar.length, direccion, puerto);
+            socketServicio.send(paquete);
                         
-			////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////
 			
 			
 			
-		} catch (IOException e) {
-			System.err.println("Error al obtener los flujos de entrada/salida.");
-		}
+        } catch (IOException e) {
+            System.err.println("Error al obtener los flujos de entrada/salida.");
+        }
+    }
 
-	}
-
-	// Yoda interpreta una frase y la devuelve en su "dialecto":
-	private String yodaDo(String peticion) {
-		// Desordenamos las palabras:
-		String[] s = peticion.split(" ");
-		String resultado="";
+    // Yoda interpreta una frase y la devuelve en su "dialecto":
+    private String yodaDo(String peticion) {
+        // Desordenamos las palabras:
+        String[] s = peticion.split(" ");
+        String resultado="";
 		
-		for(int i=0;i<s.length;i++){
-			int j=random.nextInt(s.length);
-			int k=random.nextInt(s.length);
-			String tmp=s[j];
+        for(int i=0;i<s.length;i++){
+            int j=random.nextInt(s.length);
+            int k=random.nextInt(s.length);
+            String tmp=s[j];
 			
-			s[j]=s[k];
-			s[k]=tmp;
-		}
+            s[j]=s[k];
+            s[k]=tmp;
+        }
 		
-		resultado=s[0];
-		for(int i=1;i<s.length;i++){
-		  resultado+=" "+s[i];
-		}
+        resultado=s[0];
+        for(int i=1;i<s.length;i++){
+            resultado+=" "+s[i];
+        }
 		
-		return resultado;
-	}
+        return resultado;
+    }
 }

@@ -13,7 +13,7 @@ import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class YodafyClienteTCP {
+public class YodafyClienteUDP {
 
 	public static void main(String[] args) {
 		
@@ -40,12 +40,12 @@ public class YodafyClienteTCP {
                         try {
                             direccion = InetAddress.getByName(host);
                         } catch (UnknownHostException ex) {             // Excepción en caso de lectura errónea de host< nbe
-                            Logger.getLogger(YodafyClienteTCP.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(YodafyClienteUDP.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         
                         
                         
-                        //Envíamos nuestro Datagrama
+                        //Enviamos nuestro Datagrama
 			String cadenaEnvio = new String("Al monte del volcan debes ir sin demora");
 			
                         buffer = cadenaEnvio.getBytes();
@@ -53,7 +53,7 @@ public class YodafyClienteTCP {
                         try {
                             socketServicio.send(paquete);
                         } catch (IOException ex) {
-                            Logger.getLogger(YodafyClienteTCP.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(YodafyClienteUDP.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
                         
@@ -63,7 +63,7 @@ public class YodafyClienteTCP {
                         try {
                             socketServicio.receive(paquete);
                         } catch (IOException ex) {
-                            Logger.getLogger(YodafyClienteTCP.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(YodafyClienteUDP.class.getName()).log(Level.SEVERE, null, ex);
                         }
         
                         byte [] cadenaLeida = paquete.getData();
